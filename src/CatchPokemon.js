@@ -4,7 +4,7 @@ import axios from 'axios'
 import './index.css'
 
 
-export default function App() {
+function App() {
   const [pokedex, setPokedex] = useState([]);
   const [wildPokemon, setWildPokemon] = useState({});
 
@@ -14,7 +14,7 @@ export default function App() {
 
   const pokeId = () => {
     const min = Math.ceil(1);
-    const max = Math.floor(151);
+    const max = Math.floor(4);
     return Math.floor(Math.random()* (max - min + 1)) + min;
   }
 
@@ -27,7 +27,6 @@ export default function App() {
   }
 
   const catchPokemon = (pokemon) => {
-    const pokemonCatched = [];
     setPokedex(state => {
       const pokemonExists = (state.filter(p => pokemon.id === p.id).length > 0);
 
@@ -36,18 +35,14 @@ export default function App() {
         state.sort(function (a, b) {
           return a.id - b.id
         })
-        pokemonCatched.push(pokemon);
-        console.log(pokemon);
       }
       return state
     })
-    localStorage.setItem('pokemonsCatched', pokemonCatched);
     encounterWildPokemon();
   }
 
   const releasePokemon = id => {
     setPokedex(state => state.filter(p => p.id !== id))
-    // localStorage.removeItem();
   }
 
   return (
@@ -78,3 +73,10 @@ export default function App() {
     </div>
   )
 }
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
